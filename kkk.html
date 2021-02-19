@@ -1,0 +1,82 @@
+<html>
+
+<head>
+    <title>Ứng dụng quản lí sản phẩm </title>
+</head>
+
+<body>
+    <h1>Add New Product</h1>
+    <form>
+        <input id="product_name" type="text" />
+        <button type="button" onclick="btn_add_product()">Add</button>
+    </form>
+    <h1>Display All Products </h1>
+    <table id="products_table">
+
+    </table>
+    <script>
+
+let products_list = ["Samsung Galaxy", "Sony Xperia", "Nokia6", "Apple iPhone 6S", "Oppo A71"]
+
+function show_product() {
+    let header = `<tr >
+        <th > Product name </th>  
+        <th > </th>  
+        <th > </th>  
+        </tr>`
+    let table_content = header
+    for (let i = 0; i < products_list.length; i++) {
+        let product_row = `<tr>
+                            <td>` + products_list[i] + `</td>
+                            <td>
+                                <button onclick = "start_editProduct(` + i + `)">Edit</button>
+                            </td>
+                            <td>
+                                 <button onclick = "deleteProduct(` + i + `)" >Delete</button>
+                            </td>
+                            </tr>`;
+        table_content += product_row;
+    }
+
+    document.getElementById("products_table").innerHTML = table_content;
+}
+
+function add_product(product_name) {
+    products_list.push(product_name);
+}
+
+function btn_add_product() {
+    let product_name = document.getElementById("product_name").value;
+    add_product(product_name);
+    show_product();
+}
+
+function deleteProduct(index) {
+    var option = confirm("Bạn có chắn chắn muốn xóa sản phẩm không ?")
+    if (!option) {
+        return
+    }
+    products_list.splice(index, 1)
+    show_product();
+}
+
+function start_editProduct(index) {
+    // 1. lấy được tên sản phẩm trên thẻ t
+    let product_name = document.getElementById("product_name").value;
+
+    // 2. gán tên sản phẩm vào chỉ số (index)
+    products_list[index] = product_name;
+
+    // 3, Hiển thị lại toàn bộ danh sách (mảng)
+    show_product();
+
+    //var product = products_list[index]
+    //document.getElementById('product_name').value = product.product_name
+}
+    </script>
+    <script>
+        show_product();
+    </script>
+</body>
+
+</html>
